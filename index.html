@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <title>サイコロトーク</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="jquery.qrcode.min.js"></script>
 <script language="javascript">
     var odai = [
 //怒りの話
@@ -232,6 +234,14 @@
 	</p>
 </form>
 
+<p align="center">QRコードでコピー
+<div id="qrcode" align="center"></div>
+</p>
+
+<script language="javascript">
+    var qrtext = document.getElementById("odaistring").innerText;
+    $('#qrcode').qrcode(qrtext);
+</script>
 
 </body>
 
