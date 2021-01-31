@@ -5,9 +5,12 @@
 <title>サイコロトーク</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="jquery.qrcode.min.js"></script>
+<script src="encoding.js"></script>
+
 <script language="javascript">
-    var odai = [
+<!--
 //怒りの話
+var odai_ikari = [
 'ありえない話',
 '腹の立つ話',
 '怒った話',
@@ -15,7 +18,10 @@
 'どうでもいい話',
 '何だ、それ?',
 'もうウンザリ',
+];
+
 //哀れの話
+var odai_aware = [
 '情けない話',
 'シャレにならない話',
 'ホントに情けない話',
@@ -34,7 +40,10 @@
 '言い訳させて下さい',
 '若気の至り話',
 'こんなハズじゃなかった',
+];
+
 //○○の話
+var odai_marumaru = [
 '初めて○○した話',
 '私は○○の達人',
 'きっかけは○○',
@@ -44,7 +53,10 @@
 '旬なきっかけは○○',
 '○○さんに言いたい事',
 '○○を愛する話',
+];
+
 //「私」の語がある話
+var odai_watashi = [
 '私、こってます',
 '私を変えたあの人',
 '私、変わりました',
@@ -57,7 +69,10 @@
 'ひょっとしたら私だけ',
 '私の重大ニュース',
 '私の得意料理',
+];
+
 //驚きの話
+var odai_odoroki = [
 '驚いた話',
 '信じられない話',
 'もう大変!',
@@ -65,7 +80,10 @@
 'ア然とした話',
 '危機一髪',
 'パニくった話',
+];
+
 //泣ける話
+var odai_nakeru = [
 'うるうるした話',
 'せつない話',
 '幸せだと…思う話',
@@ -74,7 +92,10 @@
 'お世話になりました',
 'ありがとう',
 '私の傷跡',
+];
+
 //幸福の話
+var odai_koufuku = [
 '恋の話',
 '恋愛話',
 '恋の告白',
@@ -94,11 +115,14 @@
 'ラブストーリーは突然に',
 'やっぱ好きやねん',
 '好きなんだけど',
-'超ラブ♥ラブ',
+'超ラブラブ',
 'メラメラ燃える恋',
 '自慢話',
 '小さな幸せ',
+];
+
 //恐怖の話
+var odai_kyoufu = [
 '怖い話（コワイ話）',
 '旬な怖い話',
 'ピンチ!',
@@ -107,7 +131,10 @@
 'ヒヤッとした話',
 'ドキッとした話',
 'びびった話',
+];
+
 //その他の話
+var odai_sonota = [
 '旬な話',
 '忘れられない話',
 'たまに思い出す話',
@@ -154,7 +181,11 @@
 '爆弾発言',
 '秘密教えます',
 '得する話'
-            ];
+];
+
+var odai = [];
+var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, odai_odoroki, odai_nakeru, odai_koufuku, odai_kyoufu, odai_sonota);
+
     function get_current_timestr() {
         nowdate = new Date();
 
@@ -169,6 +200,7 @@
     }
 
     function init_odai() {
+        odai = odai_all;
         nowdate = new Date();
         mon = nowdate.getMonth();
         if (mon == 12) {
@@ -183,7 +215,7 @@
         return odai.splice(r, 1);
     }
 
-    function copy_message() {
+    function onCopyMessage() {
         var text = document.getElementById("odaistring").innerText;
         var area = document.createElement("textarea");
         area.textContent = text;
@@ -192,6 +224,7 @@
         document.execCommand("copy");
         document.body.removeChild(area);
     }
+-->
 </script>
 </head>
 
@@ -201,21 +234,31 @@
 <table border="2" align="center" bgcolor="#ffffff">
 <tr>
     <td>
-        <p id="odaistring">
 <script language="javascript">
 <!--
 //文章表示部
     init_odai();
+    var odai_list = [];
+    for (let i = 0; i < 6; i++) {
+        odai_list.push(generate_message());
+    }
+    document.write('<p hidden id="odaistring">');
     for (let i = 0; i < 6; i++) {
         document.write(i+1);
-        document.write(':' + generate_message() + ' ');
+        document.write(':' + odai_list[i] + ' ');
     }
--->
+    document.write('</p>');
+
+    for (let i = 0; i < 6; i++) {
+        document.write('<p>');
+        document.write(i+1);
+        document.write(':' + odai_list[i]);
+        document.write('</p>');
+    }
 </script>
-        </p>
     </td>
     <td>
-        <button onclick="copy_message()">コピーする</button>
+        <button onclick="onCopyMessage()">コピーする</button>
     </td>
 </tr>
 </table>
@@ -239,7 +282,9 @@
 </p>
 
 <script language="javascript">
-    var qrtext = document.getElementById("odaistring").innerText;
+    var utf8Text = document.getElementById("odaistring").innerText;
+    var qrtext = Encoding.convert(utf8Text, 'SJIS', 'UNICODE');
+    var detected = Encoding.detect(utf8Text);
     $('#qrcode').qrcode(qrtext);
 </script>
 
