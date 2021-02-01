@@ -230,34 +230,50 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
 
 <body>
 <h1>
-<p align="center">サイコロトーク お題リスト</p>
+<p align="center">サイコロトーク</p>
 </h1>
+<h2>
+<p align="center">お題リスト</p>
+</h2>
 
 <table border="2" align="center" bgcolor="#ffffff">
 <tr>
     <td>
 <script language="javascript">
 <!--
-//文章表示部
     init_odai();
     var odai_list = [];
     for (let i = 0; i < 6; i++) {
         odai_list.push(generate_message());
     }
+
+    var numstr_ascii = ['[1]','[2]','[3]','[4]','[5]','[6]'];
+    var numstr_utf8 = ['❶','❷','❸','❹','❺','❻'];
+
     document.write('<p hidden id="odaistring">');
-    var jnumstr = ['[1]','[2]','[3]','[4]','[5]','[6]'];
-    crlf = 'サイコロトーク \n';
+    document.write('サイコロトーク');
     for (let i = 0; i < 6; i++) {
-        document.write(crlf);
-        document.write(jnumstr[i]);
+        document.write(' \n');
+        document.write(numstr_utf8[i]);
         document.write(':' + odai_list[i]);
-        crlf = ' \n';
     }
     document.write('</p>');
 
+    document.write('<p hidden id="odaistring_qr">');
+    document.write('サイコロトーク');
     for (let i = 0; i < 6; i++) {
-        document.write('<p>');
-        document.write(jnumstr[i]);
+        document.write(' \n');
+        document.write(numstr_ascii[i]);
+        document.write(':' + odai_list[i]);
+    }
+    document.write('</p>');
+
+    document.write('<p>サイコロトーク</p>');
+    for (let i = 0; i < 6; i++) {
+        document.write('<p id="');
+        document.write(i+1);
+        document.write('">');
+        document.write(numstr_utf8[i]);
         document.write(':' + odai_list[i]);
         document.write('</p>');
     }
@@ -285,14 +301,18 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
 
 <hr>
 
-<p align="center">QRコードでコピー
+<h2>
+    <p align="center">QRコードでお題リストをコピー</p>
+</h2>
+
+<p align="center">
 <div id="qrcode" align="center"></div>
 </p>
+<p align="center">※QRコードは丸数字に対応していていないため、カッコ付き数字に変換します
 
 <script language="javascript">
-    var utf8Text = document.getElementById("odaistring").innerText;
+    var utf8Text = document.getElementById("odaistring_qr").innerText;
     var qrtext = Encoding.convert(utf8Text, 'SJIS', 'UNICODE');
-    var detected = Encoding.detect(utf8Text);
     $('#qrcode').qrcode(qrtext);
 </script>
 
