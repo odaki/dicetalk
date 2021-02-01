@@ -270,19 +270,38 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
     }
     document.write('</p>');
 
-    document.write('<p>サイコロトーク</p>');
+    document.write('<p>サイコロトーク</br>');
     for (let i = 0; i < 6; i++) {
-        document.write('<p id="');
-        document.write(i+1);
-        document.write('">');
         document.write(numstr_utf8[i]);
-        document.write(':' + odai_list[i]);
-        document.write('</p>');
+        document.write(':' + odai_list[i] + '</br>');
     }
+    document.write('</p>');
+
+    document.write('<textarea hidden id="odaiarea">サイコロトークのお題は次の通りです。');
+    for (let i = 0; i < 6; i++) {
+        document.write(i+1);
+        document.write(':' + odai_list[i] + '。\n');
+    }
+    document.write('</textarea>');
 </script>
     </td>
     <td>
+        <div>
         <button onclick="onCopyMessage()">コピーする</button>
+        </div>
+        <p> </p>
+        <div>
+        <button id="speechButton">読み上げる</button>
+        </div>
+<script>
+        const text     = document.querySelector('#odaiarea')
+        const speakBtn = document.querySelector('#speechButton')
+
+        speakBtn.addEventListener('click', function() {
+            const uttr = new SpeechSynthesisUtterance(text.value)
+            speechSynthesis.speak(uttr)
+        })
+</script>
     </td>
 </tr>
 <tr>
