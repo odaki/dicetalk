@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <title>サイコロトーク</title>
+<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="favicon.ico">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="jquery.qrcode.min.js"></script>
 <script src="encoding.js"></script>
@@ -230,10 +231,10 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
 
 <body>
 <h1>
-<p align="center">サイコロトーク</p>
+<div align="center">🎲 サイコロトーク 🎲</div>
 </h1>
 <h2>
-<p align="center">お題リスト</p>
+<div align="center">お題リスト</div>
 </h2>
 
 <table border="2" align="center" bgcolor="#ffffff">
@@ -249,6 +250,7 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
 
     var numstr_ascii = ['[1]','[2]','[3]','[4]','[5]','[6]'];
     var numstr_utf8 = ['❶','❷','❸','❹','❺','❻'];
+    var dicestr_utf8 = ['⚀','⚁','⚂','⚃','⚄','⚅'];
 
     document.write('<p hidden id="odaistring">');
     document.write('サイコロトーク');
@@ -283,6 +285,11 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
         <button onclick="onCopyMessage()">コピーする</button>
     </td>
 </tr>
+<tr>
+    <td colspan="2">
+<p align="center"><a href="https://radiotalk.jp/program/67179" target="_blank" rel="noopener noreferrer">AATAの日日是好日</a></p>
+    </td>
+</tr>
 </table>
 
 <p align="center">生成時刻：
@@ -308,7 +315,7 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
 <p align="center">
 <div id="qrcode" align="center"></div>
 </p>
-<p align="center">※QRコードは丸数字に対応していていないため、カッコ付き数字に変換します
+<p align="center">※QRコードは丸数字に未対応のためカッコ付き数字に変換します
 
 <script language="javascript">
     var utf8Text = document.getElementById("odaistring_qr").innerText;
@@ -318,6 +325,7 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
 
 <hr>
 <p align="center">出典: フリー百科事典『ウィキペディア（Wikipedia）』<a href="https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%82%AA%E3%83%B3%E3%81%AE%E3%81%94%E3%81%8D%E3%81%92%E3%82%93%E3%82%88%E3%81%86">ライオンのごきげんよう</a></p>
+
 
 </body>
 
