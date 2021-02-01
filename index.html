@@ -245,12 +245,12 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
         odai_list.push(generate_message());
     }
     document.write('<p hidden id="odaistring">');
-    crlf = '';
+    crlf = 'サイコロトーク \n';
     for (let i = 0; i < 6; i++) {
         document.write(crlf);
         document.write(i+1);
         document.write(':' + odai_list[i]);
-        crlf = '\n';
+        crlf = ' \n';
     }
     document.write('</p>');
 
