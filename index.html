@@ -171,7 +171,7 @@ var odai_sonota = [
 '他の番組での話',
 '急に思い出した話',
 '私のプチ自慢',
-'ソチも悪るよのぉ～',
+'ソチも悪るよのぉ〜',
 '留守番電話',
 'ものまね!',
 '世界にひとつだけのはなし',
@@ -245,10 +245,11 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
         odai_list.push(generate_message());
     }
     document.write('<p hidden id="odaistring">');
+    var jnumstr = ['[1]','[2]','[3]','[4]','[5]','[6]'];
     crlf = 'サイコロトーク \n';
     for (let i = 0; i < 6; i++) {
         document.write(crlf);
-        document.write(i+1);
+        document.write(jnumstr[i]);
         document.write(':' + odai_list[i]);
         crlf = ' \n';
     }
@@ -256,7 +257,7 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
 
     for (let i = 0; i < 6; i++) {
         document.write('<p>');
-        document.write(i+1);
+        document.write(jnumstr[i]);
         document.write(':' + odai_list[i]);
         document.write('</p>');
     }
