@@ -227,6 +227,19 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
     }
 -->
 </script>
+<style>
+    table {
+      border-collapse: collapse;
+      background-color: #f8f8f8
+    }
+    td {
+      border: 1px solid black;
+      padding: 0px 20px;
+    }
+    .noborder {
+      border: 0px none;
+    }
+</style>
 </head>
 
 <body>
@@ -237,9 +250,9 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
 <div align="center">お題リスト</div>
 </h2>
 
-<table border="2" align="center" bgcolor="#ffffff">
+<table align="center">
 <tr>
-    <td>
+    <td colspan="2">
 <script language="javascript">
 <!--
     init_odai();
@@ -285,12 +298,10 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
     document.write('</textarea>');
 </script>
     </td>
+</tr>
+<tr>
     <td>
-        <div>
-        <button onclick="onCopyMessage()">コピーする</button>
-        </div>
-        <p> </p>
-        <div>
+        <div align="center">
         <button id="speechButton">読み上げる</button>
         </div>
 <script>
@@ -302,6 +313,11 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
             speechSynthesis.speak(uttr)
         })
 </script>
+    </td>
+    <td>
+        <div align="center">
+        <button onclick="onCopyMessage()">コピーする</button>
+        </div>
     </td>
 </tr>
 </table>
@@ -329,7 +345,7 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
 <p align="center">
 <div id="qrcode" align="center"></div>
 </p>
-<p align="center">※QRコードは丸数字に未対応のためカッコ付き数字に変換します
+<p align="center">※QRコードは丸数字に未対応のためカッコ付き数字に変換します</p>
 
 <script language="javascript">
     var utf8Text = document.getElementById("odaistring_qr").innerText;
@@ -338,8 +354,8 @@ var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, 
 </script>
 
 <hr>
-<p align="center">出典: フリー百科事典『ウィキペディア（Wikipedia）』<a href="https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%82%AA%E3%83%B3%E3%81%AE%E3%81%94%E3%81%8D%E3%81%92%E3%82%93%E3%82%88%E3%81%86">ライオンのごきげんよう</a></p>
-
+<p align="center">出典: フリー百科事典『ウィキペディア（Wikipedia）』</br>
+<a href="https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%82%AA%E3%83%B3%E3%81%AE%E3%81%94%E3%81%8D%E3%81%92%E3%82%93%E3%82%88%E3%81%86">ライオンのごきげんよう</a></p>
 
 </body>
 
