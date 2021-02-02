@@ -332,7 +332,7 @@
             const numstr_utf8 = ['❶', '❷', '❸', '❹', '❺', '❻'];
             const dicestr_utf8 = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
 
-            document.write('<div>サイコロトーク</br>');
+            document.write('<div>本日のサイコロトーク</br>');
             for (let i = 0; i < 6; i++) {
               document.write(numstr_utf8[i]);
               document.write(':' + odai_list[i] + '</br>');
@@ -343,7 +343,7 @@
             // document.write('<div>'+ odai + '</div>');
 
             document.write('<div hidden id="odaistring">');
-            document.write('サイコロトーク');
+            document.write('本日のサイコロトーク');
             for (let i = 0; i < 6; i++) {
               document.write(' \n');
               document.write(numstr_utf8[i]);
@@ -352,7 +352,7 @@
             document.write('</div>');
 
             document.write('<div hidden id="odaistring_qr">');
-            document.write('サイコロトーク');
+            document.write('本日のサイコロトーク');
             for (let i = 0; i < 6; i++) {
               document.write(' \n');
               document.write(numstr_ascii[i]);
@@ -360,7 +360,7 @@
             }
             document.write('</div>');
 
-            document.write('<textarea hidden id="odaiarea">サイコロトークのお題は、次の通りです。\n');
+            document.write('<textarea hidden id="odaiarea">本日のお題は、次の通りです。\n');
             for (let i = 0; i < 6; i++) {
               let t = odai_list[i][0].replace('○○', 'マルマル');
               document.write(i + 1);
