@@ -1,361 +1,412 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="utf-8" />
-<title>サイコロトーク</title>
-<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="favicon.ico">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="jquery.qrcode.min.js"></script>
-<script src="encoding.js"></script>
+  <meta charset="utf-8" />
+  <title>サイコロトーク</title>
+  <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="favicon.ico">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="jquery.qrcode.min.js"></script>
+  <script src="encoding.js"></script>
 
-<script language="javascript">
-<!--
-//怒りの話
-var odai_ikari = [
-'ありえない話',
-'腹の立つ話',
-'怒った話',
-'あきれてものも言えない話',
-'どうでもいい話',
-'何だ、それ?',
-'もうウンザリ',
-];
+  <script>
+    //怒りの話
+    var odai_ikari = [
+      'ありえない話',
+      '腹の立つ話',
+      '怒った話',
+      'あきれてものも言えない話',
+      'どうでもいい話',
+      '何だ、それ?',
+      'もうウンザリ',
+    ];
 
-//哀れの話
-var odai_aware = [
-'情けない話',
-'シャレにならない話',
-'ホントに情けない話',
-'恥ずかしい話',
-'恥も涙も捨てた話',
-'今だからゴメンナサイ話',
-'アッ、やっちゃった!',
-'ありゃりゃ!?',
-'そんな無茶な!',
-'へこんだ話',
-'ショックな話',
-'痛かった話',
-'シュンとした話',
-'信じてもらえない話',
-'出来れば言いたくない話',
-'言い訳させて下さい',
-'若気の至り話',
-'こんなハズじゃなかった',
-];
+    //哀れの話
+    var odai_aware = [
+      '情けない話',
+      'シャレにならない話',
+      'ホントに情けない話',
+      '恥ずかしい話',
+      '恥も涙も捨てた話',
+      '今だからゴメンナサイ話',
+      'アッ、やっちゃった!',
+      'ありゃりゃ!?',
+      'そんな無茶な!',
+      'へこんだ話',
+      'ショックな話',
+      '痛かった話',
+      'シュンとした話',
+      '信じてもらえない話',
+      '出来れば言いたくない話',
+      '言い訳させて下さい',
+      '若気の至り話',
+      'こんなハズじゃなかった',
+    ];
 
-//○○の話
-var odai_marumaru = [
-'初めて○○した話',
-'私は○○の達人',
-'きっかけは○○',
-'○○はじめました',
-'こうみえても○○した話',
-'こうみえても私○○なんです',
-'旬なきっかけは○○',
-'○○さんに言いたい事',
-'○○を愛する話',
-];
+    //○○の話
+    var odai_marumaru = [
+      '初めて○○した話',
+      '私は○○の達人',
+      'きっかけは○○',
+      '○○はじめました',
+      'こうみえても○○した話',
+      'こうみえても私○○なんです',
+      '旬なきっかけは○○',
+      '○○さんに言いたい事',
+      '○○を愛する話',
+    ];
 
-//「私」の語がある話
-var odai_watashi = [
-'私、こってます',
-'私を変えたあの人',
-'私、変わりました',
-'私バカよね',
-'私の弱点',
-'私の秘密',
-'私のクイズ',
-'私の周りの変な人',
-'私だけのルール',
-'ひょっとしたら私だけ',
-'私の重大ニュース',
-'私の得意料理',
-];
+    //「私」の語がある話
+    var odai_watashi = [
+      '私、こってます',
+      '私を変えたあの人',
+      '私、変わりました',
+      '私バカよね',
+      '私の弱点',
+      '私の秘密',
+      '私のクイズ',
+      '私の周りの変な人',
+      '私だけのルール',
+      'ひょっとしたら私だけ',
+      '私の重大ニュース',
+      '私の得意料理',
+    ];
 
-//驚きの話
-var odai_odoroki = [
-'驚いた話',
-'信じられない話',
-'もう大変!',
-'ドヒャー!',
-'ア然とした話',
-'危機一髪',
-'パニくった話',
-];
+    //驚きの話
+    var odai_odoroki = [
+      '驚いた話',
+      '信じられない話',
+      'もう大変!',
+      'ドヒャー!',
+      'ア然とした話',
+      '危機一髪',
+      'パニくった話',
+    ];
 
-//泣ける話
-var odai_nakeru = [
-'うるうるした話',
-'せつない話',
-'幸せだと…思う話',
-'涙した話',
-'感謝した話',
-'お世話になりました',
-'ありがとう',
-'私の傷跡',
-];
+    //泣ける話
+    var odai_nakeru = [
+      'うるうるした話',
+      'せつない話',
+      '幸せだと…思う話',
+      '涙した話',
+      '感謝した話',
+      'お世話になりました',
+      'ありがとう',
+      '私の傷跡',
+    ];
 
-//幸福の話
-var odai_koufuku = [
-'恋の話',
-'恋愛話',
-'恋の告白',
-'カワイイ話',
-'自分をほめてあげたい話',
-'ムフフ',
-'のろけ話',
-'笑える話',
-'ごきげんな話',
-'ウキウキした話',
-'ちょっとイイ話',
-'おいしい話',
-'好きな人の話',
-'どや顔した話',
-'いいね!と思った話',
-'昨日の面白い話',
-'ラブストーリーは突然に',
-'やっぱ好きやねん',
-'好きなんだけど',
-'超ラブラブ',
-'メラメラ燃える恋',
-'自慢話',
-'小さな幸せ',
-];
+    //幸福の話
+    var odai_koufuku = [
+      '恋の話',
+      '恋愛話',
+      '恋の告白',
+      'カワイイ話',
+      '自分をほめてあげたい話',
+      'ムフフ',
+      'のろけ話',
+      '笑える話',
+      'ごきげんな話',
+      'ウキウキした話',
+      'ちょっとイイ話',
+      'おいしい話',
+      '好きな人の話',
+      'どや顔した話',
+      'いいね!と思った話',
+      '昨日の面白い話',
+      'ラブストーリーは突然に',
+      'やっぱ好きやねん',
+      '好きなんだけど',
+      '超ラブラブ',
+      'メラメラ燃える恋',
+      '自慢話',
+      '小さな幸せ',
+    ];
 
-//恐怖の話
-var odai_kyoufu = [
-'怖い話',
-'旬な怖い話',
-'ピンチ!',
-'とんでもない話',
-'鳥肌の立つ話',
-'ヒヤッとした話',
-'ドキッとした話',
-'びびった話',
-];
+    //恐怖の話
+    var odai_kyoufu = [
+      '怖い話',
+      '旬な怖い話',
+      'ピンチ!',
+      'とんでもない話',
+      '鳥肌の立つ話',
+      'ヒヤッとした話',
+      'ドキッとした話',
+      'びびった話',
+    ];
 
-//その他の話
-var odai_sonota = [
-'旬な話',
-'忘れられない話',
-'たまに思い出す話',
-'ここだけの話',
-'小さな悩み',
-'ここだけは譲れない',
-'ついつい',
-'初体験',
-'でっかい話・ちっちゃい話',
-'アゲアゲな話・サゲサゲな話',
-'芸能界の友達の話',
-'ひとつ勉強になった話',
-'気になってしょうがない事',
-'これ、はじめて話します',
-'国際的な話',
-'心よりお願い申し上げます',
-'今さらですが',
-'最近、どう?',
-'最近、若い人の話',
-'最近気になってしょうがない事',
-'変な夢',
-'まるで夢のような話',
-'うわさ話',
-'なるほどねぇ',
-'やめられない話',
-'夏の思い出',
-'思い出の曲',
-'短い話',
-'もしも…',
-'皆さん、どう思います?',
-'これといってオチのない話',
-'お昼からすいません',
-'昔の一大事',
-'他の番組での話',
-'急に思い出した話',
-'私のプチ自慢',
-'ソチも悪るよのぉ〜',
-'留守番電話',
-'ものまね!',
-'世界にひとつだけのはなし',
-'どうでもいい話',
-'自分の性格が出た話',
-'実の名をあげられない話',
-'爆弾発言',
-'秘密教えます',
-'得する話'
-];
+    //その他の話
+    var odai_sonota = [
+      '旬な話',
+      '忘れられない話',
+      'たまに思い出す話',
+      'ここだけの話',
+      '小さな悩み',
+      'ここだけは譲れない',
+      'ついつい',
+      '初体験',
+      'でっかい話・ちっちゃい話',
+      'アゲアゲな話・サゲサゲな話',
+      '芸能界の友達の話',
+      'ひとつ勉強になった話',
+      '気になってしょうがない事',
+      'これ、はじめて話します',
+      '国際的な話',
+      '心よりお願い申し上げます',
+      '今さらですが',
+      '最近、どう?',
+      '最近、若い人の話',
+      '最近気になってしょうがない事',
+      '変な夢',
+      'まるで夢のような話',
+      'うわさ話',
+      'なるほどねぇ',
+      'やめられない話',
+      '夏の思い出',
+      '思い出の曲',
+      '短い話',
+      'もしも…',
+      '皆さん、どう思います?',
+      'これといってオチのない話',
+      'お昼からすいません',
+      '昔の一大事',
+      '他の番組での話',
+      '急に思い出した話',
+      '私のプチ自慢',
+      'ソチも悪るよのぉ〜',
+      '留守番電話',
+      'ものまね!',
+      '世界にひとつだけのはなし',
+      'どうでもいい話',
+      '自分の性格が出た話',
+      '実の名をあげられない話',
+      '爆弾発言',
+      '秘密教えます',
+      '得する話'
+    ];
 
-var odai = [];
-var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, odai_odoroki, odai_nakeru, odai_koufuku, odai_kyoufu, odai_sonota);
+    var odai = [];
+    var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, odai_odoroki, odai_nakeru, odai_koufuku, odai_kyoufu, odai_sonota);
 
     function get_current_timestr() {
-        nowdate = new Date();
+      nowdate = new Date();
 
-        year = nowdate.getYear();
-        mon = nowdate.getMonth();
-        day = nowdate.getDate();
-        hour = nowdate.getHours();
-        min = nowdate.getMinutes();
-        sec = nowdate.getSeconds();
+      year = nowdate.getYear();
+      mon = nowdate.getMonth();
+      day = nowdate.getDate();
+      hour = nowdate.getHours();
+      min = nowdate.getMinutes();
+      sec = nowdate.getSeconds();
 
-        return hour + "時" + min + "分" + sec + "秒";
+      return (mon+1) + "月" + day + "日 " + hour + "時" + min + "分" + sec + "秒";
     }
 
     function init_odai() {
-        odai = odai_all;
-        nowdate = new Date();
-        mon = nowdate.getMonth();
-        if (mon == 12) {
-                odai.push('今年の重大ニュース（12月のみ）');
-                odai.push('今年やり残したこと（12月のみ）');
-        }
+      odai = odai_all;
+      nowdate = new Date();
+      mon = nowdate.getMonth();
+      if (mon == 12) {
+        odai.push('今年の重大ニュース（12月のみ）');
+        odai.push('今年やり残したこと（12月のみ）');
+      }
     }
 
     function generate_message() {
-        n = odai.length;
-        r = Math.floor(Math.random()*n);
-        return odai.splice(r, 1);
+      n = odai.length;
+      r = Math.floor(Math.random() * n);
+      return odai.splice(r, 1);
     }
 
     function onCopyMessage() {
-        var text = document.getElementById("odaistring").innerText;
-        var area = document.createElement("textarea");
-        area.textContent = text;
-        document.body.appendChild(area);
-        area.select();
-        document.execCommand("copy");
-        document.body.removeChild(area);
+      var text = document.getElementById("odaistring").innerText;
+      var area = document.createElement("textarea");
+      area.textContent = text;
+      document.body.appendChild(area);
+      area.select();
+      document.execCommand("copy");
+      document.body.removeChild(area);
     }
--->
-</script>
-<style>
+  </script>
+  <style>
+    body {
+      font-family: "Helvetica Neue",
+        Arial,
+        "Hiragino Kaku Gothic ProN",
+        "Hiragino Sans",
+        Meiryo,
+        sans-serif;
+    }
+
+    .marumoji {
+      font-family: "ヒラギノ丸ゴ Pro W4", "ヒラギノ丸ゴ Pro", "Hiragino Maru Gothic Pro", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "HG丸ｺﾞｼｯｸM-PRO", "HGMaruGothicMPRO";
+    }
+
+    a[target=_blank][rel="noopener noreferrer"] {
+      padding-right: 15px;
+      background: url(external_link.png) right center/11px auto no-repeat;
+    }
+
     table {
-      border-collapse: collapse;
-      background-color: #f8f8f8
+      width: 300px;
+      border: 1px solid #ccc;
+      border-collapse: separate;
+      border-radius: 10px;
+      border-spacing: 0;
+      padding: 10px 15px;
+
+      th,
+      td {
+        border-bottom: 1px solid #ccc;
+        padding: 10px 20px;
+      }
+
+      th {
+        border-right: 1px solid #ccc;
+      }
+
+      tr {
+        &:first-child {
+          th {
+            border-radius: 10px 0 0 0;
+          }
+
+          td {
+            border-radius: 0 10px 0 0;
+          }
+        }
+
+        &:last-child {
+          th {
+            border-bottom: none;
+            border-radius: 0 0 0 10px;
+          }
+
+          td {
+            border-bottom: none;
+            border-radius: 0 0 10px 0;
+          }
+        }
+      }
     }
-    td {
-      border: 1px solid black;
-      padding: 0px 20px;
-    }
-    .noborder {
-      border: 0px none;
-    }
-</style>
+  </style>
 </head>
 
 <body>
-<h1>
-<div align="center">🎲 サイコロトーク 🎲</div>
-</h1>
-<h2>
-<div align="center">お題リスト</div>
-</h2>
+  <h1>
+    <div align="center">🎲 サイコロトーク 🎲</div>
+  </h1>
+  <h2>
+    <div align="center">お題リスト</div>
+  </h2>
 
-<table align="center">
-<tr>
-    <td colspan="2">
-<script language="javascript">
-<!--
-    init_odai();
-    var odai_list = [];
-    for (let i = 0; i < 6; i++) {
-        odai_list.push(generate_message());
-    }
+  <table align="center" summary="お題" class=marumoji>
+    <tbody>
+      <tr>
+        <td colspan="2">
+          <script>
+            init_odai();
+            var odai_list = [];
+            for (var i = 0; i < 6; i++) {
+              odai_list.push(generate_message());
+            }
 
-    var numstr_ascii = ['[1]','[2]','[3]','[4]','[5]','[6]'];
-    var numstr_utf8 = ['❶','❷','❸','❹','❺','❻'];
-    var dicestr_utf8 = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+            var numstr_ascii = ['[1]', '[2]', '[3]', '[4]', '[5]', '[6]'];
+            var numstr_utf8 = ['❶', '❷', '❸', '❹', '❺', '❻'];
+            var dicestr_utf8 = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
 
-    document.write('<p hidden id="odaistring">');
-    document.write('サイコロトーク');
-    for (let i = 0; i < 6; i++) {
-        document.write(' \n');
-        document.write(numstr_utf8[i]);
-        document.write(':' + odai_list[i]);
-    }
-    document.write('</p>');
+            document.write('<div>サイコロトーク</br>');
+            for (var i = 0; i < 6; i++) {
+              document.write(numstr_utf8[i]);
+              document.write(':' + odai_list[i] + '</br>');
+            }
+            document.write('</div>');
 
-    document.write('<p hidden id="odaistring_qr">');
-    document.write('サイコロトーク');
-    for (let i = 0; i < 6; i++) {
-        document.write(' \n');
-        document.write(numstr_ascii[i]);
-        document.write(':' + odai_list[i]);
-    }
-    document.write('</p>');
+            document.write('<div hidden id="odaistring">');
+            document.write('サイコロトーク');
+            for (var i = 0; i < 6; i++) {
+              document.write(' \n');
+              document.write(numstr_utf8[i]);
+              document.write(':' + odai_list[i]);
+            }
+            document.write('</div>');
 
-    document.write('<p>サイコロトーク</br>');
-    for (let i = 0; i < 6; i++) {
-        document.write(numstr_utf8[i]);
-        document.write(':' + odai_list[i] + '</br>');
-    }
-    document.write('</p>');
+            document.write('<div hidden id="odaistring_qr">');
+            document.write('サイコロトーク');
+            for (var i = 0; i < 6; i++) {
+              document.write(' \n');
+              document.write(numstr_ascii[i]);
+              document.write(':' + odai_list[i]);
+            }
+            document.write('</div>');
 
-    document.write('<textarea hidden id="odaiarea">サイコロトークのお題は次の通りです。');
-    for (let i = 0; i < 6; i++) {
-        document.write(i+1);
-        document.write(':' + odai_list[i] + '。\n');
-    }
-    document.write('</textarea>');
-</script>
-    </td>
-</tr>
-<tr>
-    <td>
-        <div align="center">
-        <button id="speechButton">読み上げる</button>
-        </div>
-<script>
-        const text     = document.querySelector('#odaiarea')
-        const speakBtn = document.querySelector('#speechButton')
-
-        speakBtn.addEventListener('click', function() {
-            const uttr = new SpeechSynthesisUtterance(text.value)
-            speechSynthesis.speak(uttr)
-        })
-</script>
-    </td>
-    <td>
-        <div align="center">
-        <button onclick="onCopyMessage()">コピーする</button>
-        </div>
-    </td>
-</tr>
-</table>
-
-<p align="center">生成時刻：
-<script language="javascript">
-<!--
-    document.write(get_current_timestr());
--->
-</script>
-</p>
-
-<form>
-	<p align="center">
-		<input type="button" value="作り直す" onClick="location.reload()">
-	</p>
-</form>
-
+            document.write('<textarea hidden id="odaiarea">サイコロトークのお題は、次の通りです。');
+            for (var i = 0; i < 6; i++) {
+              document.write(i + 1);
+              document.write('、' + odai_list[i] + '。\n');
+            }
+            document.write('</textarea>');
+          </script>
 <hr>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>
+          <div align="center" valign="middle">
+            <button id="speechButton">読み上げる</button>
+          </div>
+          <script>
+            const text = document.querySelector('#odaiarea')
+            const speakBtn = document.querySelector('#speechButton')
 
-<h2>
+            speakBtn.addEventListener('click', function() {
+              const uttr = new SpeechSynthesisUtterance(text.value)
+              speechSynthesis.speak(uttr)
+            })
+          </script>
+        </td>
+        <td>
+          <div align="center" valign="middle">
+            <button onclick="onCopyMessage()">コピーする</button>
+          </div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <p align="center">生成時刻：
+    <script>
+      document.write(get_current_timestr());
+    </script>
+  </p>
+
+  <form>
+    <p align="center">
+      <input type="button" value="作り直す" onClick="location.reload()">
+    </p>
+  </form>
+
+  <hr>
+
+  <h2>
     <p align="center">QRコードでお題リストをコピー</p>
-</h2>
+  </h2>
 
-<p align="center">
-<div id="qrcode" align="center"></div>
-</p>
-<p align="center">※QRコードは丸数字に未対応のためカッコ付き数字に変換します</p>
+  <p align="center">
+    <div id="qrcode" align="center"></div>
+  </p>
+  <p align="center">※丸数字はカッコ付き数字に変換されます</p>
 
-<script language="javascript">
+  <script>
     var utf8Text = document.getElementById("odaistring_qr").innerText;
     var qrtext = Encoding.convert(utf8Text, 'SJIS', 'UNICODE');
     $('#qrcode').qrcode(qrtext);
-</script>
+  </script>
 
-<hr>
-<p align="center">出典: フリー百科事典『ウィキペディア（Wikipedia）』</br>
-<a href="https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%82%AA%E3%83%B3%E3%81%AE%E3%81%94%E3%81%8D%E3%81%92%E3%82%93%E3%82%88%E3%81%86">ライオンのごきげんよう</a></p>
+  <hr>
+  <p align="center">出典: フリー百科事典『ウィキペディア（Wikipedia）』</br>
+    <a target="_blank" rel="noopener noreferrer" href="https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%82%AA%E3%83%B3%E3%81%AE%E3%81%94%E3%81%8D%E3%81%92%E3%82%93%E3%82%88%E3%81%86">ライオンのごきげんよう</a>
+  </p>
 
 </body>
 
