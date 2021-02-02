@@ -375,15 +375,16 @@
             <button id="speechButton">読み上げる</button>
           </div>
           <script>
-            const text = document.querySelector('#odaiarea')
-            const speakBtn = document.querySelector('#speechButton')
-
-            speakBtn.addEventListener('click', function() {
-              const uttr = new SpeechSynthesisUtterance(text.value)
-              uttr.lang = 'ja-JP';
-              uttr.rate = 1.0;
-              speechSynthesis.speak(uttr)
-            })
+            const text = document.querySelector('#odaiarea');
+            const button = document.querySelector('#speechButton');
+            button.addEventListener('click',
+              function() {
+                const uttr = new SpeechSynthesisUtterance(text.value);
+                uttr.lang = 'ja-JP';
+                uttr.rate = 1.0;
+                speechSynthesis.speak(uttr);
+              }
+            )
           </script>
         </td>
         <td>
