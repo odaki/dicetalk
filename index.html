@@ -242,13 +242,27 @@
       font-family: "ヒラギノ丸ゴ Pro W4", "ヒラギノ丸ゴ Pro", "Hiragino Maru Gothic Pro", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "HG丸ｺﾞｼｯｸM-PRO", "HGMaruGothicMPRO";
     }
 
+    h1,
+    h2,
+    p {
+      text-align: center;
+    }
+
     a[target=_blank][rel="noopener noreferrer"] {
       padding-right: 15px;
       background: url(external_link.png) right center/11px auto no-repeat;
     }
 
+    div.button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     table {
       width: 300px;
+      margin-left: auto;
+      margin-right: auto;
       border: 1px solid #ccc;
       border-collapse: separate;
       border-radius: 10px;
@@ -293,14 +307,9 @@
 </head>
 
 <body>
-  <h1>
-    <div align="center">🎲 サイコロトーク 🎲</div>
-  </h1>
-  <h2>
-    <div align="center">お題リスト</div>
-  </h2>
-
-  <table align="center" summary="お題" class=marumoji>
+  <h1>🎲 サイコロトーク 🎲</h1>
+  <h2>お題リスト</h2>
+  <table summary="お題" class="marumoji">
     <tbody>
       <tr>
         <td colspan="2">
@@ -354,7 +363,7 @@
     <tfoot>
       <tr>
         <td>
-          <div align="center" valign="middle">
+          <div class="button">
             <button id="speechButton">読み上げる</button>
           </div>
           <script>
@@ -370,7 +379,7 @@
           </script>
         </td>
         <td>
-          <div align="center" valign="middle">
+          <div class="button">
             <button onclick="onCopyMessage()">コピーする</button>
           </div>
         </td>
@@ -378,29 +387,22 @@
     </tfoot>
   </table>
 
-  <p align="center">
+  <p>
     <script>
       document.write(get_current_timestr());
     </script>
     作成
   </p>
 
-  <form>
-    <p align="center">
-      <input type="button" value="作り直す" onClick="location.reload()">
-    </p>
-  </form>
+  <p>
+    <button onClick="location.reload()">作り直す</button>
+  </p>
 
   <hr>
 
-  <h2>
-    <p align="center">QRコードでお題リストをコピー</p>
-  </h2>
-
-  <p align="center">
-    <div id="qrcode" align="center"></div>
-  </p>
-  <p align="center">※丸数字はカッコ付き数字に変換されます</p>
+  <h2>QRコードでお題リストをコピー</h2>
+  <p id="qrcode"></p>
+  <p>※丸数字はカッコ付き数字に変換されます</p>
 
   <script>
     var utf8Text = document.getElementById("odaistring_qr").innerText;
@@ -409,7 +411,8 @@
   </script>
 
   <hr>
-  <p align="center">出典: フリー百科事典『ウィキペディア（Wikipedia）』</br>
+
+  <p>出典: フリー百科事典『ウィキペディア（Wikipedia）』</br>
     <a target="_blank" rel="noopener noreferrer" href="https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%82%AA%E3%83%B3%E3%81%AE%E3%81%94%E3%81%8D%E3%81%92%E3%82%93%E3%82%88%E3%81%86">ライオンのごきげんよう</a>
   </p>
 
