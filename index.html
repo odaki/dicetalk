@@ -12,7 +12,7 @@
 
   <script>
     //怒りの話
-    var odai_ikari = [
+    const odai_ikari = [
       'ありえない話',
       '腹の立つ話',
       '怒った話',
@@ -23,7 +23,7 @@
     ];
 
     //哀れの話
-    var odai_aware = [
+    const odai_aware = [
       '情けない話',
       'シャレにならない話',
       'ホントに情けない話',
@@ -45,7 +45,7 @@
     ];
 
     //○○の話
-    var odai_marumaru = [
+    const odai_marumaru = [
       '初めて○○した話',
       '私は○○の達人',
       'きっかけは○○',
@@ -58,7 +58,7 @@
     ];
 
     //「私」の語がある話
-    var odai_watashi = [
+    const odai_watashi = [
       '私、こってます',
       '私を変えたあの人',
       '私、変わりました',
@@ -74,7 +74,7 @@
     ];
 
     //驚きの話
-    var odai_odoroki = [
+    const odai_odoroki = [
       '驚いた話',
       '信じられない話',
       'もう大変!',
@@ -85,7 +85,7 @@
     ];
 
     //泣ける話
-    var odai_nakeru = [
+    const odai_nakeru = [
       'うるうるした話',
       'せつない話',
       '幸せだと…思う話',
@@ -97,7 +97,7 @@
     ];
 
     //幸福の話
-    var odai_koufuku = [
+    const odai_koufuku = [
       '恋の話',
       '恋愛話',
       '恋の告白',
@@ -124,7 +124,7 @@
     ];
 
     //恐怖の話
-    var odai_kyoufu = [
+    const odai_kyoufu = [
       '怖い話',
       '旬な怖い話',
       'ピンチ!',
@@ -136,7 +136,7 @@
     ];
 
     //その他の話
-    var odai_sonota = [
+    const odai_sonota = [
       '旬な話',
       '忘れられない話',
       'たまに思い出す話',
@@ -186,7 +186,6 @@
     ];
 
     var odai = [];
-    var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, odai_odoroki, odai_nakeru, odai_koufuku, odai_kyoufu, odai_sonota);
 
     function get_current_timestr() {
       const daystr = ['日', '月', '火', '水', '木', '金', '土'];
@@ -204,7 +203,8 @@
     }
 
     function init_odai() {
-      odai = odai_all;
+      odai = [];
+      odai = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, odai_odoroki, odai_nakeru, odai_koufuku, odai_kyoufu, odai_sonota);
       nowdate = new Date();
       mon = nowdate.getMonth();
       if (mon == 12) {
@@ -220,8 +220,8 @@
     }
 
     function onCopyMessage() {
-      var text = document.getElementById("odaistring").innerText;
-      var area = document.createElement("textarea");
+      let text = document.getElementById("odaistring").innerText;
+      let area = document.createElement("textarea");
       area.textContent = text;
       document.body.appendChild(area);
       area.select();
@@ -323,8 +323,8 @@
         <td colspan="2">
           <script>
             init_odai();
-            var odai_list = [];
-            for (var i = 0; i < 6; i++) {
+            let odai_list = [];
+            for (let i = 0; i < 6; i++) {
               odai_list.push(generate_message());
             }
 
@@ -333,15 +333,18 @@
             const dicestr_utf8 = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
 
             document.write('<div>サイコロトーク</br>');
-            for (var i = 0; i < 6; i++) {
+            for (let i = 0; i < 6; i++) {
               document.write(numstr_utf8[i]);
               document.write(':' + odai_list[i] + '</br>');
             }
             document.write('</div>');
 
+            // debug
+            // document.write('<div>'+ odai + '</div>');
+
             document.write('<div hidden id="odaistring">');
             document.write('サイコロトーク');
-            for (var i = 0; i < 6; i++) {
+            for (let i = 0; i < 6; i++) {
               document.write(' \n');
               document.write(numstr_utf8[i]);
               document.write(':' + odai_list[i]);
@@ -350,7 +353,7 @@
 
             document.write('<div hidden id="odaistring_qr">');
             document.write('サイコロトーク');
-            for (var i = 0; i < 6; i++) {
+            for (let i = 0; i < 6; i++) {
               document.write(' \n');
               document.write(numstr_ascii[i]);
               document.write(':' + odai_list[i]);
@@ -358,7 +361,7 @@
             document.write('</div>');
 
             document.write('<textarea hidden id="odaiarea">サイコロトークのお題は、次の通りです。');
-            for (var i = 0; i < 6; i++) {
+            for (let i = 0; i < 6; i++) {
               document.write(i + 1);
               document.write('、' + odai_list[i] + '。\n');
             }
@@ -416,13 +419,12 @@
 
   <h2>QRコードでお題リストをコピー</h2>
   <p id="qrcode"></p>
-  <p>※丸数字はカッコ付き数字に変換されます</p>
-
   <script>
-    var utf8Text = document.getElementById("odaistring_qr").innerText;
-    var qrtext = Encoding.convert(utf8Text, 'SJIS', 'UNICODE');
+    let utf8Text = document.getElementById("odaistring_qr").innerText;
+    let qrtext = Encoding.convert(utf8Text, 'SJIS', 'UNICODE');
     $('#qrcode').qrcode(qrtext);
   </script>
+  <p>※丸数字はカッコ付き数字に変換されます</p>
 
   <hr>
 
