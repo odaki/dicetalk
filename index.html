@@ -147,7 +147,7 @@
       'でっかい話・ちっちゃい話',
       'アゲアゲな話・サゲサゲな話',
       '芸能界の友達の話',
-      'ひとつ勉強になった話',
+      'ひとつ、勉強になった話',
       '気になってしょうがない事',
       'これ、はじめて話します',
       '国際的な話',
@@ -363,8 +363,8 @@
 
             speakBtn.addEventListener('click', function() {
               const uttr = new SpeechSynthesisUtterance(text.value)
-uttr.lang = 'ja-JP';
-uttr.rate = 1.0;
+              uttr.lang = 'ja-JP';
+              uttr.rate = 1.0;
               speechSynthesis.speak(uttr)
             })
           </script>
@@ -378,10 +378,11 @@ uttr.rate = 1.0;
     </tfoot>
   </table>
 
-  <p align="center">生成時刻：
+  <p align="center">
     <script>
       document.write(get_current_timestr());
     </script>
+    作成
   </p>
 
   <form>
