@@ -360,10 +360,11 @@
             }
             document.write('</div>');
 
-            document.write('<textarea hidden id="odaiarea">サイコロトークのお題は、次の通りです。');
+            document.write('<textarea hidden id="odaiarea">サイコロトークのお題は、次の通りです。\n');
             for (let i = 0; i < 6; i++) {
+              let t = odai_list[i][0].replace('○○', 'マルマル');
               document.write(i + 1);
-              document.write('、' + odai_list[i] + '。\n');
+              document.write('、' + t + '。\n');
             }
             document.write('</textarea>');
           </script>
