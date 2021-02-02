@@ -172,7 +172,7 @@
       '他の番組での話',
       '急に思い出した話',
       '私のプチ自慢',
-      'ソチも悪るよのぉ〜',
+      'ソチもワルよのぉ〜',
       '留守番電話',
       'ものまね!',
       '世界にひとつだけのはなし',
@@ -188,16 +188,18 @@
     var odai_all = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, odai_odoroki, odai_nakeru, odai_koufuku, odai_kyoufu, odai_sonota);
 
     function get_current_timestr() {
+      const daystr = ['日', '月', '火', '水', '木', '金', '土'];
       nowdate = new Date();
 
       year = nowdate.getYear();
       mon = nowdate.getMonth();
-      day = nowdate.getDate();
+      date = nowdate.getDate();
+      day = nowdate.getDay();
       hour = nowdate.getHours();
       min = nowdate.getMinutes();
       sec = nowdate.getSeconds();
 
-      return (mon+1) + "月" + day + "日 " + hour + "時" + min + "分" + sec + "秒";
+      return (mon + 1) + "月" + date + "日(" + daystr[day] + ") " + hour + "時" + min + "分" + sec + "秒";
     }
 
     function init_odai() {
@@ -309,9 +311,9 @@
               odai_list.push(generate_message());
             }
 
-            var numstr_ascii = ['[1]', '[2]', '[3]', '[4]', '[5]', '[6]'];
-            var numstr_utf8 = ['❶', '❷', '❸', '❹', '❺', '❻'];
-            var dicestr_utf8 = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+            const numstr_ascii = ['[1]', '[2]', '[3]', '[4]', '[5]', '[6]'];
+            const numstr_utf8 = ['❶', '❷', '❸', '❹', '❺', '❻'];
+            const dicestr_utf8 = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
 
             document.write('<div>サイコロトーク</br>');
             for (var i = 0; i < 6; i++) {
@@ -345,7 +347,7 @@
             }
             document.write('</textarea>');
           </script>
-<hr>
+          <hr>
         </td>
       </tr>
     </tbody>
