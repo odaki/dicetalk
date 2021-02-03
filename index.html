@@ -9,7 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script src="jquery.qrcode.min.js"></script>
   <script src="encoding.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
   <script>
     //怒りの話
     const odai_ikari = [
@@ -189,24 +189,24 @@
 
     function get_current_timestr() {
       const daystr = ['日', '月', '火', '水', '木', '金', '土'];
-      nowdate = new Date();
+      let nowdate = new Date();
 
-      year = nowdate.getYear();
-      mon = nowdate.getMonth();
-      date = nowdate.getDate();
-      day = nowdate.getDay();
-      hour = nowdate.getHours();
-      min = nowdate.getMinutes();
-      sec = nowdate.getSeconds();
+      let year = nowdate.getYear();
+      let mon = nowdate.getMonth() + 1;
+      let date = nowdate.getDate();
+      let day = nowdate.getDay();
+      let hour = nowdate.getHours();
+      let min = nowdate.getMinutes();
+      let sec = nowdate.getSeconds();
 
-      return (mon + 1) + "月" + date + "日(" + daystr[day] + ") " + hour + "時" + min + "分";
+      return mon + "月" + date + "日(" + daystr[day] + ") " + hour + "時" + min + "分";
     }
 
     function init_odai() {
       odai = [];
       odai = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, odai_odoroki, odai_nakeru, odai_koufuku, odai_kyoufu, odai_sonota);
-      nowdate = new Date();
-      mon = nowdate.getMonth();
+      let nowdate = new Date();
+      let mon = nowdate.getMonth() + 1;
       if (mon == 12) {
         odai.push('今年の重大ニュース');
         odai.push('今年やり残したこと');
@@ -214,8 +214,8 @@
     }
 
     function generate_message() {
-      n = odai.length;
-      r = Math.floor(Math.random() * n);
+      let n = odai.length;
+      let r = Math.floor(Math.random() * n);
       return odai.splice(r, 1);
     }
 
@@ -227,6 +227,26 @@
       area.select();
       document.execCommand("copy");
       document.body.removeChild(area);
+    }
+
+    function confettiAnime() {
+      confetti({
+        origin: {
+          x: Math.random(),
+          y: 0
+        },
+        particleCount: 12,
+        ticks: 1000,
+        zIndex: -1,
+        colors: [
+          '#ff9e9e',
+          '#ff9eff',
+          '#9e9eff',
+          '#9effff',
+          '#9eff9e',
+          '#ffff9e'
+        ]
+      })
     }
   </script>
   <style>
@@ -432,7 +452,15 @@
   <p>出典: フリー百科事典『ウィキペディア（Wikipedia）』</br>
     <a target="_blank" rel="noopener noreferrer" href="https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%82%AA%E3%83%B3%E3%81%AE%E3%81%94%E3%81%8D%E3%81%92%E3%82%93%E3%82%88%E3%81%86">ライオンのごきげんよう</a>
   </p>
-
+  <script>
+    let nowdate = new Date();
+    let mon = nowdate.getMonth() + 1;
+    let date = nowdate.getDate();
+    if (mon == 9 && date == 3) {
+      confettiAnime();
+      setInterval(confettiAnime, 1000);
+    }
+  </script>
 </body>
 
 </html>
