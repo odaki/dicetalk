@@ -187,7 +187,15 @@
       '得する話'
     ];
 
+    const numstr_ascii = ['[1]', '[2]', '[3]', '[4]', '[5]', '[6]'];
+    const numstr_utf8 = ['❶', '❷', '❸', '❹', '❺', '❻'];
+    const dicestr_utf8 = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+
     var odai = [];
+    var odai_num = 0;
+    var odai_set = [];
+    var odai_set_num = 0;
+    var odai_selected_num = 0;
 
     function get_current_timestr() {
       const daystr = ['日', '月', '火', '水', '木', '金', '土'];
@@ -204,6 +212,12 @@
       return mon + "月" + date + "日(" + daystr[day] + ") " + hour + "時" + min + "分";
     }
 
+    function getOneMessage() {
+      let n = odai.length;
+      let r = Math.floor(Math.random() * n);
+      return odai.splice(r, 1);
+    }
+
     function init_odai() {
       odai = [];
       odai = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, odai_odoroki, odai_nakeru, odai_koufuku, odai_kyoufu, odai_sonota);
@@ -213,16 +227,93 @@
         odai.push('今年の重大ニュース');
         odai.push('今年やり残したこと');
       }
+      odai_num = odai.length;
+      odai_set_num = odai_num / 6;
+      odai_set = new Array(odai_set_num);
+      for (let j = 0; j < odai_set_num; j++) {
+        odai_set[j] = [];
+        for (let i = 0; i < 6; i++) {
+          odai_set[j].push(getOneMessage());
+        }
+      }
+      return odai_set;
     }
 
-    function generate_message() {
-      let n = odai.length;
-      let r = Math.floor(Math.random() * n);
-      return odai.splice(r, 1);
+    function setQR() {
+      div = document.getElementById('qrcode');
+      div.innerHTML = "";
+
+      let utf8Text = document.getElementById("odaistring_qr").innerText;
+      let qrtext = Encoding.convert(utf8Text, 'SJIS', 'UNICODE');
+      $('#qrcode').qrcode(qrtext);
+    }
+
+    function setOdai() {
+      var odai_list = [];
+      for (let i = 0; i < 6; i++) {
+          odai_list[i] = odai_set[odai_selected_num][i];
+      }
+
+      let div = document.getElementById('odaistring');
+      let html = "本日のサイコロトーク</br>";
+      for (let i = 0; i < 6; i++) {
+        html = html + numstr_utf8[i] + ':' + odai_list[i] + '</br>';
+      }
+      html = html + '</div>';
+      div.innerHTML = html;
+
+      div = document.getElementById('odaistring_utf8');
+      html = "本日のサイコロトーク";
+      for (let i = 0; i < 6; i++) {
+        html = html + ' \n' + numstr_utf8[i] + ':' + odai_list[i];
+      }
+      html = html + '</div>';
+      div.innerHTML = html;
+
+      div = document.getElementById('odaistring_qr');
+      html = "本日のサイコロトーク";
+      for (let i = 0; i < 6; i++) {
+        html = html + ' \n' + numstr_ascii[i] + ':' + odai_list[i];
+      }
+      html = html + '</div>';
+      div.innerHTML = html;
+
+      let textarea = document.getElementById('odaiarea');
+      let val = '本日のお題は、次の通りです。\n';
+      for (let i = 0; i < 6; i++) {
+        let t = odai_list[i][0].replace('○○', 'マルマル');
+        val = val + (i + 1) + '、' + t + '。\n';
+      }
+      textarea.textContent = val;
+    }
+
+    function setOdainum() {
+      let p = document.getElementById('odainum');
+      p.innerHTML = 'お題セットNo.' + ('00' + (odai_selected_num + 1)).slice(-2) + '/' + ('00' + odai_set_num).slice(-2);
+    }
+
+    function onPrevOdaiset() {
+      odai_selected_num = odai_selected_num - 1;
+      if (odai_selected_num < 0) {
+        odai_selected_num = odai_set_num - 1;
+      }
+      setOdai();
+      setOdainum();
+      setQR();
+    }
+
+    function onNextOdaiset() {
+      odai_selected_num = odai_selected_num + 1;
+      if (odai_selected_num >= odai_set_num) {
+        odai_selected_num = 0;
+      }
+      setOdai();
+      setOdainum();
+      setQR();
     }
 
     function onCopyMessage() {
-      let text = document.getElementById("odaistring").innerText;
+      let text = document.getElementById("odaistring_utf8").innerText;
       let area = document.createElement("textarea");
       area.textContent = text;
       document.body.appendChild(area);
@@ -250,7 +341,10 @@
         ]
       })
     }
-  </script>
+
+    init_odai();
+
+</script>
   <style>
     body {
       -webkit-text-size-adjust: 100%;
@@ -260,16 +354,6 @@
         "Hiragino Sans",
         Meiryo,
         sans-serif;
-    }
-
-    .marumoji {
-      font-family: "ヒラギノ丸ゴ Pro W4",
-        "ヒラギノ丸ゴ Pro",
-        "Hiragino Maru Gothic Pro",
-        "ヒラギノ角ゴ Pro W3",
-        "Hiragino Kaku Gothic Pro",
-        "HG丸ｺﾞｼｯｸM-PRO",
-        "HGMaruGothicMPRO";
     }
 
     h1,
@@ -289,10 +373,7 @@
       justify-content: center;
     }
 
-    table {
-      width: 300px;
-      margin-left: auto;
-      margin-right: auto;
+    table.odai {
       border: 1px solid #ccc;
       border-collapse: separate;
       border-radius: 10px;
@@ -333,62 +414,36 @@
         }
       }
     }
+
+    table {
+      width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: "ヒラギノ丸ゴ Pro W4",
+        "ヒラギノ丸ゴ Pro",
+        "Hiragino Maru Gothic Pro",
+        "ヒラギノ角ゴ Pro W3",
+        "Hiragino Kaku Gothic Pro",
+        "HG丸ｺﾞｼｯｸM-PRO",
+        "HGMaruGothicMPRO";
+      }
+    }
   </style>
 </head>
 
 <body>
   <h1>🎲 サイコロトーク 🎲</h1>
   <h2>お題リスト</h2>
-  <table summary="お題" class="marumoji">
+  <table summary="お題" class="odai">
     <tbody>
       <tr>
         <td colspan="2">
+          <div id="odaistring"></div>
+          <div hidden id="odaistring_utf8"></div>
+          <div hidden id="odaistring_qr"></div>
+          <textarea hidden id="odaiarea"></textarea>
           <script>
-            init_odai();
-            let odai_list = [];
-            for (let i = 0; i < 6; i++) {
-              odai_list.push(generate_message());
-            }
-
-            const numstr_ascii = ['[1]', '[2]', '[3]', '[4]', '[5]', '[6]'];
-            const numstr_utf8 = ['❶', '❷', '❸', '❹', '❺', '❻'];
-            const dicestr_utf8 = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
-
-            document.write('<div>本日のサイコロトーク</br>');
-            for (let i = 0; i < 6; i++) {
-              document.write(numstr_utf8[i]);
-              document.write(':' + odai_list[i] + '</br>');
-            }
-            document.write('</div>');
-
-            // debug
-            // document.write('<div>'+ odai + '</div>');
-
-            document.write('<div hidden id="odaistring">');
-            document.write('本日のサイコロトーク');
-            for (let i = 0; i < 6; i++) {
-              document.write(' \n');
-              document.write(numstr_utf8[i]);
-              document.write(':' + odai_list[i]);
-            }
-            document.write('</div>');
-
-            document.write('<div hidden id="odaistring_qr">');
-            document.write('本日のサイコロトーク');
-            for (let i = 0; i < 6; i++) {
-              document.write(' \n');
-              document.write(numstr_ascii[i]);
-              document.write(':' + odai_list[i]);
-            }
-            document.write('</div>');
-
-            document.write('<textarea hidden id="odaiarea">本日のお題は、次の通りです。\n');
-            for (let i = 0; i < 6; i++) {
-              let t = odai_list[i][0].replace('○○', 'マルマル');
-              document.write(i + 1);
-              document.write('、' + t + '。\n');
-            }
-            document.write('</textarea>');
+            setOdai();
           </script>
           <hr>
         </td>
@@ -429,23 +484,42 @@
     作成
   </p>
 
-
-  <p>&nbsp;</p>
-
+<table class="marumoji">
+  <tbody>
+    <tr>
+      <td>
+        <div class="button">
+          <button onClick="onPrevOdaiset()">前へ</button>
+        </div>
+      </td>
+      <td>
+        <p id="odainum">
+          <script>
+            setOdainum();
+          </script>
+        </p>
+      </td>
+      <td>
+        <div class="button">
+          <button onClick="onNextOdaiset()">次へ</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
   <p>
-    <button onClick="location.reload()">作り直す</button>
   </p>
 
-  <p>&nbsp;</p>
+  <p>
+    <button onClick="location.reload()">お題セットを作り直す</button>
+  </p>
 
   <hr>
 
   <h2>QRコードでお題リストをコピー</h2>
   <p id="qrcode"></p>
   <script>
-    let utf8Text = document.getElementById("odaistring_qr").innerText;
-    let qrtext = Encoding.convert(utf8Text, 'SJIS', 'UNICODE');
-    $('#qrcode').qrcode(qrtext);
+    setQR();
   </script>
   <p>※丸数字はカッコ付き数字に変換されます</p>
 
