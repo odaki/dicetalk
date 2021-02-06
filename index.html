@@ -197,7 +197,7 @@
     var odai_set_num = 0;
     var odai_selected_num = 0;
 
-    function get_current_timestr() {
+    function getCurrentTimeStr() {
       const daystr = ['日', '月', '火', '水', '木', '金', '土'];
       let nowdate = new Date();
 
@@ -212,13 +212,13 @@
       return mon + "月" + date + "日(" + daystr[day] + ") " + hour + "時" + min + "分";
     }
 
-    function getOneMessage() {
+    function getOneOdai() {
       let n = odai.length;
       let r = Math.floor(Math.random() * n);
       return odai.splice(r, 1);
     }
 
-    function init_odai() {
+    function initOdai() {
       odai = [];
       odai = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, odai_odoroki, odai_nakeru, odai_koufuku, odai_kyoufu, odai_sonota);
       let nowdate = new Date();
@@ -233,13 +233,13 @@
       for (let j = 0; j < odai_set_num; j++) {
         odai_set[j] = [];
         for (let i = 0; i < 6; i++) {
-          odai_set[j].push(getOneMessage());
+          odai_set[j].push(getOneOdai());
         }
       }
       return odai_set;
     }
 
-    function setQR() {
+    function setOdaiQR() {
       let div = document.getElementById('qrcode');
       div.innerHTML = "";
 
@@ -287,7 +287,7 @@
       textarea.textContent = val;
     }
 
-    function setOdainum() {
+    function setOdainNum() {
       let p = document.getElementById('odainum');
       p.innerHTML = 'お題セットNo.' + ('00' + (odai_selected_num + 1)).slice(-2) + '/' + ('00' + odai_set_num).slice(-2);
     }
@@ -298,8 +298,8 @@
         odai_selected_num = odai_set_num - 1;
       }
       setOdai();
-      setOdainum();
-      setQR();
+      setOdainNum();
+      setOdaiQR();
     }
 
     function onNextOdaiset() {
@@ -308,8 +308,8 @@
         odai_selected_num = 0;
       }
       setOdai();
-      setOdainum();
-      setQR();
+      setOdainNum();
+      setOdaiQR();
     }
 
     function onCopyMessage() {
@@ -342,7 +342,7 @@
       })
     }
 
-    init_odai();
+    initOdai();
 
 </script>
   <style>
@@ -479,7 +479,7 @@
 
   <p>
     <script>
-      document.write(get_current_timestr());
+      document.write(getCurrentTimeStr());
     </script>
     作成
   </p>
@@ -495,7 +495,7 @@
       <td>
         <p id="odainum">
           <script>
-            setOdainum();
+            setOdainNum();
           </script>
         </p>
       </td>
@@ -519,7 +519,7 @@
   <h2>QRコードでお題リストをコピー</h2>
   <p id="qrcode"></p>
   <script>
-    setQR();
+    setOdaiQR();
   </script>
   <p>※丸数字はカッコ付き数字に変換されます</p>
 
