@@ -289,7 +289,7 @@
 
     function setOdainNum() {
       let p = document.getElementById('odainum');
-      p.innerHTML = 'お題セットNo.' + ('00' + (odai_selected_num + 1)).slice(-2) + '/' + ('00' + odai_set_num).slice(-2);
+      p.innerHTML = 'お題リストNo.' + ('00' + (odai_selected_num + 1)).slice(-2) + '/' + ('00' + odai_set_num).slice(-2);
     }
 
     function onPrevOdaiset() {
@@ -511,7 +511,7 @@
   </p>
 
   <p>
-    <button onClick="location.reload()">お題セットを作り直す</button>
+    <button onClick="location.reload()"お題リストを作り直す</button>
   </p>
 
   <hr>
