@@ -236,7 +236,7 @@
           odai_set[j].push(getOneOdai());
         }
       }
-      return odai_set;
+      odai_selected_num = 0;
     }
 
     function setOdaiQR() {
@@ -289,7 +289,13 @@
 
     function setOdainNum() {
       let p = document.getElementById('odainum');
-      p.innerHTML = 'お題リストNo.' + ('00' + (odai_selected_num + 1)).slice(-2) + '/' + ('00' + odai_set_num).slice(-2);
+      p.innerHTML = 'リスト No.' + ('00' + (odai_selected_num + 1)).slice(-2) + ' / ' + ('00' + odai_set_num).slice(-2);
+    }
+
+    function onChangeOdaiset() {
+      setOdai();
+      setOdainNum();
+      setOdaiQR();
     }
 
     function onPrevOdaiset() {
@@ -297,9 +303,7 @@
       if (odai_selected_num < 0) {
         odai_selected_num = odai_set_num - 1;
       }
-      setOdai();
-      setOdainNum();
-      setOdaiQR();
+      onChangeOdaiset();
     }
 
     function onNextOdaiset() {
@@ -307,9 +311,12 @@
       if (odai_selected_num >= odai_set_num) {
         odai_selected_num = 0;
       }
-      setOdai();
-      setOdainNum();
-      setOdaiQR();
+      onChangeOdaiset();
+    }
+
+    function onRebuildOdai() {
+      initOdai();
+      onChangeOdaiset();
     }
 
     function onCopyMessage() {
@@ -515,7 +522,7 @@
   </p>
 
   <p>
-    <button onClick="location.reload()">お題リストを作り直す</button>
+    <button onClick="onRebuildOdai();">作り直す</button>
   </p>
 
   <hr>
