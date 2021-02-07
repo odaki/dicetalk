@@ -1,550 +1,599 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>サイコロトーク</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="android-touch-icon.png"
+      sizes="192x192"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="jquery.qrcode.min.js"></script>
+    <script src="encoding.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+    <script>
+      //怒りの話
+      const odai_ikari = [
+        "ありえない話",
+        "腹の立つ話",
+        "怒った話",
+        "あきれてものも言えない話",
+        "どうでもいい話",
+        "何だ、それ?",
+        "もうウンザリ",
+      ];
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>サイコロトーク</title>
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" type="image/png" href="android-touch-icon.png" sizes="192x192">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <script src="jquery.qrcode.min.js"></script>
-  <script src="encoding.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
-  <script>
-    //怒りの話
-    const odai_ikari = [
-      'ありえない話',
-      '腹の立つ話',
-      '怒った話',
-      'あきれてものも言えない話',
-      'どうでもいい話',
-      '何だ、それ?',
-      'もうウンザリ',
-    ];
+      //哀れの話
+      const odai_aware = [
+        "情けない話",
+        "シャレにならない話",
+        "ホントに情けない話",
+        "恥ずかしい話",
+        "恥も涙も捨てた話",
+        "今だからゴメンナサイ話",
+        "アッ、やっちゃった!",
+        "ありゃりゃ!?",
+        "そんな無茶な!",
+        "へこんだ話",
+        "ショックな話",
+        "痛かった話",
+        "シュンとした話",
+        "信じてもらえない話",
+        "出来れば言いたくない話",
+        "言い訳させて下さい",
+        "若気の至り話",
+        "こんなハズじゃなかった",
+      ];
 
-    //哀れの話
-    const odai_aware = [
-      '情けない話',
-      'シャレにならない話',
-      'ホントに情けない話',
-      '恥ずかしい話',
-      '恥も涙も捨てた話',
-      '今だからゴメンナサイ話',
-      'アッ、やっちゃった!',
-      'ありゃりゃ!?',
-      'そんな無茶な!',
-      'へこんだ話',
-      'ショックな話',
-      '痛かった話',
-      'シュンとした話',
-      '信じてもらえない話',
-      '出来れば言いたくない話',
-      '言い訳させて下さい',
-      '若気の至り話',
-      'こんなハズじゃなかった',
-    ];
+      //○○の話
+      const odai_marumaru = [
+        "初めて○○した話",
+        "私は○○の達人",
+        "きっかけは○○",
+        "○○はじめました",
+        "こうみえても○○した話",
+        "こうみえても私○○なんです",
+        "旬なきっかけは○○",
+        "○○さんに言いたい事",
+        "○○を愛する話",
+      ];
 
-    //○○の話
-    const odai_marumaru = [
-      '初めて○○した話',
-      '私は○○の達人',
-      'きっかけは○○',
-      '○○はじめました',
-      'こうみえても○○した話',
-      'こうみえても私○○なんです',
-      '旬なきっかけは○○',
-      '○○さんに言いたい事',
-      '○○を愛する話',
-    ];
+      //「私」の語がある話
+      const odai_watashi = [
+        "私、こってます",
+        "私を変えたあの人",
+        "私、変わりました",
+        "私バカよね",
+        "私の弱点",
+        "私の秘密",
+        "私のクイズ",
+        "私の周りの変な人",
+        "私だけのルール",
+        "ひょっとしたら私だけ",
+        "私の重大ニュース",
+        "私の得意料理",
+      ];
 
-    //「私」の語がある話
-    const odai_watashi = [
-      '私、こってます',
-      '私を変えたあの人',
-      '私、変わりました',
-      '私バカよね',
-      '私の弱点',
-      '私の秘密',
-      '私のクイズ',
-      '私の周りの変な人',
-      '私だけのルール',
-      'ひょっとしたら私だけ',
-      '私の重大ニュース',
-      '私の得意料理',
-    ];
+      //驚きの話
+      const odai_odoroki = [
+        "驚いた話",
+        "信じられない話",
+        "もう大変!",
+        "ドヒャー!",
+        "ア然とした話",
+        "危機一髪",
+        "パニくった話",
+      ];
 
-    //驚きの話
-    const odai_odoroki = [
-      '驚いた話',
-      '信じられない話',
-      'もう大変!',
-      'ドヒャー!',
-      'ア然とした話',
-      '危機一髪',
-      'パニくった話',
-    ];
+      //泣ける話
+      const odai_nakeru = [
+        "うるうるした話",
+        "せつない話",
+        "幸せだと…思う話",
+        "涙した話",
+        "感謝した話",
+        "お世話になりました",
+        "ありがとう",
+        "私の傷跡",
+      ];
 
-    //泣ける話
-    const odai_nakeru = [
-      'うるうるした話',
-      'せつない話',
-      '幸せだと…思う話',
-      '涙した話',
-      '感謝した話',
-      'お世話になりました',
-      'ありがとう',
-      '私の傷跡',
-    ];
+      //幸福の話
+      const odai_koufuku = [
+        "恋の話",
+        "恋愛話",
+        "恋の告白",
+        "カワイイ話",
+        "自分をほめてあげたい話",
+        "ムフフ",
+        "のろけ話",
+        "笑える話",
+        "ごきげんな話",
+        "ウキウキした話",
+        "ちょっとイイ話",
+        "おいしい話",
+        "好きな人の話",
+        "ドヤ顔した話",
+        "いいね!と思った話",
+        "昨日の面白い話",
+        "ラブストーリーは突然に",
+        "やっぱスキやねん",
+        "好きなんだけど",
+        "超ラブラブ",
+        "メラメラ燃える恋",
+        "自慢話",
+        "小さな幸せ",
+      ];
 
-    //幸福の話
-    const odai_koufuku = [
-      '恋の話',
-      '恋愛話',
-      '恋の告白',
-      'カワイイ話',
-      '自分をほめてあげたい話',
-      'ムフフ',
-      'のろけ話',
-      '笑える話',
-      'ごきげんな話',
-      'ウキウキした話',
-      'ちょっとイイ話',
-      'おいしい話',
-      '好きな人の話',
-      'ドヤ顔した話',
-      'いいね!と思った話',
-      '昨日の面白い話',
-      'ラブストーリーは突然に',
-      'やっぱスキやねん',
-      '好きなんだけど',
-      '超ラブラブ',
-      'メラメラ燃える恋',
-      '自慢話',
-      '小さな幸せ',
-    ];
+      //恐怖の話
+      const odai_kyoufu = [
+        "怖い話",
+        "旬な怖い話",
+        "ピンチ!",
+        "とんでもない話",
+        "鳥肌の立つ話",
+        "ヒヤッとした話",
+        "ドキッとした話",
+        "びびった話",
+      ];
 
-    //恐怖の話
-    const odai_kyoufu = [
-      '怖い話',
-      '旬な怖い話',
-      'ピンチ!',
-      'とんでもない話',
-      '鳥肌の立つ話',
-      'ヒヤッとした話',
-      'ドキッとした話',
-      'びびった話',
-    ];
+      //その他の話
+      const odai_sonota = [
+        "旬な話",
+        "忘れられない話",
+        "たまに思い出す話",
+        "ここだけの話",
+        "小さな悩み",
+        "ここだけは譲れない",
+        "ついつい",
+        "初体験",
+        "でっかい話・ちっちゃい話",
+        "アゲアゲな話・サゲサゲな話",
+        "芸能界の友達の話",
+        "ひとつ、勉強になった話",
+        "気になってしょうがない事",
+        "これ、はじめて話します",
+        "国際的な話",
+        "心よりお願い申し上げます",
+        "今さらですが",
+        "最近、どう?",
+        "最近、若い人の話",
+        "最近、気になってしょうがない事",
+        "変な夢",
+        "まるで夢のような話",
+        "うわさ話",
+        "なるほどねぇ",
+        "やめられない話",
+        "夏の思い出",
+        "思い出の曲",
+        "短い話",
+        "もしも…",
+        "皆さん、どう思います?",
+        "これといってオチのない話",
+        "お昼からすいません",
+        "昔の一大事",
+        "他の番組での話",
+        "急に思い出した話",
+        "私のプチ自慢",
+        "ソチもワルよのぉ〜",
+        "留守番電話",
+        "ものまね!",
+        "世界にひとつだけのはなし",
+        "どうでもいい話",
+        "自分の性格が出た話",
+        "じつの名をあげられない話",
+        "爆弾発言",
+        "秘密教えます",
+        "トクする話",
+      ];
 
-    //その他の話
-    const odai_sonota = [
-      '旬な話',
-      '忘れられない話',
-      'たまに思い出す話',
-      'ここだけの話',
-      '小さな悩み',
-      'ここだけは譲れない',
-      'ついつい',
-      '初体験',
-      'でっかい話・ちっちゃい話',
-      'アゲアゲな話・サゲサゲな話',
-      '芸能界の友達の話',
-      'ひとつ、勉強になった話',
-      '気になってしょうがない事',
-      'これ、はじめて話します',
-      '国際的な話',
-      '心よりお願い申し上げます',
-      '今さらですが',
-      '最近、どう?',
-      '最近、若い人の話',
-      '最近、気になってしょうがない事',
-      '変な夢',
-      'まるで夢のような話',
-      'うわさ話',
-      'なるほどねぇ',
-      'やめられない話',
-      '夏の思い出',
-      '思い出の曲',
-      '短い話',
-      'もしも…',
-      '皆さん、どう思います?',
-      'これといってオチのない話',
-      'お昼からすいません',
-      '昔の一大事',
-      '他の番組での話',
-      '急に思い出した話',
-      '私のプチ自慢',
-      'ソチもワルよのぉ〜',
-      '留守番電話',
-      'ものまね!',
-      '世界にひとつだけのはなし',
-      'どうでもいい話',
-      '自分の性格が出た話',
-      'じつの名をあげられない話',
-      '爆弾発言',
-      '秘密教えます',
-      'トクする話'
-    ];
+      const numstr_ascii = ["[1]", "[2]", "[3]", "[4]", "[5]", "[6]"];
+      const numstr_utf8 = ["❶", "❷", "❸", "❹", "❺", "❻"];
+      const dicestr_utf8 = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
 
-    const numstr_ascii = ['[1]', '[2]', '[3]', '[4]', '[5]', '[6]'];
-    const numstr_utf8 = ['❶', '❷', '❸', '❹', '❺', '❻'];
-    const dicestr_utf8 = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+      var odai = [];
+      var odai_num = 0;
+      var odai_set = [];
+      var odai_set_num = 0;
+      var odai_selected_num = 0;
 
-    var odai = [];
-    var odai_num = 0;
-    var odai_set = [];
-    var odai_set_num = 0;
-    var odai_selected_num = 0;
+      function getCurrentTimeStr() {
+        const daystr = ["日", "月", "火", "水", "木", "金", "土"];
+        let nowdate = new Date();
 
-    function getCurrentTimeStr() {
-      const daystr = ['日', '月', '火', '水', '木', '金', '土'];
-      let nowdate = new Date();
+        let year = nowdate.getYear();
+        let mon = nowdate.getMonth() + 1;
+        let date = nowdate.getDate();
+        let day = nowdate.getDay();
+        let hour = nowdate.getHours();
+        let min = nowdate.getMinutes();
+        let sec = nowdate.getSeconds();
 
-      let year = nowdate.getYear();
-      let mon = nowdate.getMonth() + 1;
-      let date = nowdate.getDate();
-      let day = nowdate.getDay();
-      let hour = nowdate.getHours();
-      let min = nowdate.getMinutes();
-      let sec = nowdate.getSeconds();
-
-      return mon + "月" + date + "日(" + daystr[day] + ") " + hour + "時" + min + "分";
-    }
-
-    function getOneOdai() {
-      let n = odai.length;
-      let r = Math.floor(Math.random() * n);
-      return odai.splice(r, 1);
-    }
-
-    function initOdai() {
-      odai = [];
-      odai = odai.concat(odai_ikari, odai_aware, odai_marumaru, odai_watashi, odai_odoroki, odai_nakeru, odai_koufuku, odai_kyoufu, odai_sonota);
-      let nowdate = new Date();
-      let mon = nowdate.getMonth() + 1;
-      if (mon == 12) {
-        odai.push('今年の重大ニュース');
-        odai.push('今年やり残したこと');
+        return (
+          mon +
+          "月" +
+          date +
+          "日(" +
+          daystr[day] +
+          ") " +
+          hour +
+          "時" +
+          min +
+          "分"
+        );
       }
-      odai_num = odai.length;
-      odai_set_num = odai_num / 6;
-      odai_set = new Array(odai_set_num);
-      for (let j = 0; j < odai_set_num; j++) {
-        odai_set[j] = [];
-        for (let i = 0; i < 6; i++) {
-          odai_set[j].push(getOneOdai());
+
+      function getOneOdai() {
+        let n = odai.length;
+        let r = Math.floor(Math.random() * n);
+        return odai.splice(r, 1);
+      }
+
+      function initOdai() {
+        odai = [];
+        odai = odai.concat(
+          odai_ikari,
+          odai_aware,
+          odai_marumaru,
+          odai_watashi,
+          odai_odoroki,
+          odai_nakeru,
+          odai_koufuku,
+          odai_kyoufu,
+          odai_sonota
+        );
+        let nowdate = new Date();
+        let mon = nowdate.getMonth() + 1;
+        if (mon == 12) {
+          odai.push("今年の重大ニュース");
+          odai.push("今年やり残したこと");
         }
-      }
-      odai_selected_num = 0;
-    }
-
-    function setOdaiQR() {
-      let div = document.getElementById('qrcode');
-      div.innerHTML = "";
-
-      let utf8Text = document.getElementById("odaistring_qr").innerText;
-      let qrtext = Encoding.convert(utf8Text, 'SJIS', 'UNICODE');
-      $('#qrcode').qrcode(qrtext);
-    }
-
-    function setOdai() {
-      var odai_list = [];
-      for (let i = 0; i < 6; i++) {
-          odai_list[i] = odai_set[odai_selected_num][i];
-      }
-
-      let div = document.getElementById('odaistring');
-      let html = "本日のサイコロトーク<br>";
-      for (let i = 0; i < 6; i++) {
-        html = html + numstr_utf8[i] + ':' + odai_list[i] + '<br>';
-      }
-      div.innerHTML = html;
-
-      div = document.getElementById('odaistring_utf8');
-      html = "本日のサイコロトーク";
-      for (let i = 0; i < 6; i++) {
-        html = html + ' \n' + numstr_utf8[i] + ':' + odai_list[i];
-      }
-      div.innerHTML = html;
-
-      div = document.getElementById('odaistring_qr');
-      html = "本日のサイコロトーク";
-      for (let i = 0; i < 6; i++) {
-        html = html + ' \n' + numstr_ascii[i] + ':' + odai_list[i];
-      }
-      div.innerHTML = html;
-
-      let textarea = document.getElementById('odaiarea');
-      let val = '本日のお題は、次の通りです。\n';
-      for (let i = 0; i < 6; i++) {
-        let t = odai_list[i][0].replace('○○', 'マルマル');
-        val = val + (i + 1) + '、' + t + '。\n';
-      }
-      textarea.textContent = val;
-    }
-
-    function setOdainNum() {
-      let p = document.getElementById('odainum');
-      p.innerHTML = 'リスト No.' + ('00' + (odai_selected_num + 1)).slice(-2) + ' / ' + ('00' + odai_set_num).slice(-2);
-    }
-
-    function onChangeOdaiset() {
-      setOdai();
-      setOdainNum();
-      setOdaiQR();
-    }
-
-    function onPrevOdaiset() {
-      odai_selected_num = odai_selected_num - 1;
-      if (odai_selected_num < 0) {
-        odai_selected_num = odai_set_num - 1;
-      }
-      onChangeOdaiset();
-    }
-
-    function onNextOdaiset() {
-      odai_selected_num = odai_selected_num + 1;
-      if (odai_selected_num >= odai_set_num) {
+        odai_num = odai.length;
+        odai_set_num = odai_num / 6;
+        odai_set = new Array(odai_set_num);
+        for (let j = 0; j < odai_set_num; j++) {
+          odai_set[j] = [];
+          for (let i = 0; i < 6; i++) {
+            odai_set[j].push(getOneOdai());
+          }
+        }
         odai_selected_num = 0;
       }
-      onChangeOdaiset();
-    }
 
-    function onRebuildOdai() {
+      function setOdaiQR() {
+        let div = document.getElementById("qrcode");
+        div.innerHTML = "";
+
+        let utf8Text = document.getElementById("odaistring_qr").innerText;
+        let qrtext = Encoding.convert(utf8Text, "SJIS", "UNICODE");
+        $("#qrcode").qrcode(qrtext);
+      }
+
+      function setOdai() {
+        var odai_list = [];
+        for (let i = 0; i < 6; i++) {
+          odai_list[i] = odai_set[odai_selected_num][i];
+        }
+
+        let div = document.getElementById("odaistring");
+        let html = "本日のサイコロトーク<br>";
+        for (let i = 0; i < 6; i++) {
+          html = html + numstr_utf8[i] + ":" + odai_list[i] + "<br>";
+        }
+        div.innerHTML = html;
+
+        div = document.getElementById("odaistring_utf8");
+        html = "本日のサイコロトーク";
+        for (let i = 0; i < 6; i++) {
+          html = html + " \n" + numstr_utf8[i] + ":" + odai_list[i];
+        }
+        div.innerHTML = html;
+
+        div = document.getElementById("odaistring_qr");
+        html = "本日のサイコロトーク";
+        for (let i = 0; i < 6; i++) {
+          html = html + " \n" + numstr_ascii[i] + ":" + odai_list[i];
+        }
+        div.innerHTML = html;
+
+        let textarea = document.getElementById("odaiarea");
+        let val = "本日のお題は、次の通りです。\n";
+        for (let i = 0; i < 6; i++) {
+          let t = odai_list[i][0].replace("○○", "マルマル");
+          val = val + (i + 1) + "、" + t + "。\n";
+        }
+        textarea.textContent = val;
+      }
+
+      function setOdainNum() {
+        let p = document.getElementById("odainum");
+        p.innerHTML =
+          "リスト No." +
+          ("00" + (odai_selected_num + 1)).slice(-2) +
+          " / " +
+          ("00" + odai_set_num).slice(-2);
+      }
+
+      function onChangeOdaiset() {
+        setOdai();
+        setOdainNum();
+        setOdaiQR();
+      }
+
+      function onPrevOdaiset() {
+        odai_selected_num = odai_selected_num - 1;
+        if (odai_selected_num < 0) {
+          odai_selected_num = odai_set_num - 1;
+        }
+        onChangeOdaiset();
+      }
+
+      function onNextOdaiset() {
+        odai_selected_num = odai_selected_num + 1;
+        if (odai_selected_num >= odai_set_num) {
+          odai_selected_num = 0;
+        }
+        onChangeOdaiset();
+      }
+
+      function onRebuildOdai() {
+        initOdai();
+        onChangeOdaiset();
+      }
+
+      function onCopyMessage() {
+        let text = document.getElementById("odaistring_utf8").innerText;
+        let area = document.createElement("textarea");
+        area.textContent = text;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand("copy");
+        document.body.removeChild(area);
+      }
+
+      function confettiAnime() {
+        confetti({
+          origin: {
+            x: Math.random(),
+            y: 0,
+          },
+          particleCount: 12,
+          ticks: 1000,
+          zIndex: -1,
+          colors: [
+            "#ff9e9e",
+            "#ff9eff",
+            "#9e9eff",
+            "#9effff",
+            "#9eff9e",
+            "#ffff9e",
+          ],
+        });
+      }
+
       initOdai();
-      onChangeOdaiset();
-    }
-
-    function onCopyMessage() {
-      let text = document.getElementById("odaistring_utf8").innerText;
-      let area = document.createElement("textarea");
-      area.textContent = text;
-      document.body.appendChild(area);
-      area.select();
-      document.execCommand("copy");
-      document.body.removeChild(area);
-    }
-
-    function confettiAnime() {
-      confetti({
-        origin: {
-          x: Math.random(),
-          y: 0
-        },
-        particleCount: 12,
-        ticks: 1000,
-        zIndex: -1,
-        colors: [
-          '#ff9e9e',
-          '#ff9eff',
-          '#9e9eff',
-          '#9effff',
-          '#9eff9e',
-          '#ffff9e'
-        ]
-      })
-    }
-
-    initOdai();
-
-</script>
-  <style>
-    html {
-      touch-action: manipulation;
-    }
-
-    body {
-      -webkit-text-size-adjust: 100%;
-      font-family: "Helvetica Neue",
-        Arial,
-        "Hiragino Kaku Gothic ProN",
-        "Hiragino Sans",
-        Meiryo,
-        sans-serif;
-    }
-
-    h1,
-    h2,
-    p {
-      text-align: center;
-    }
-
-    a[target=_blank][rel="noopener noreferrer"] {
-      padding-right: 15px;
-      background: url(external_link.png) right center/11px auto no-repeat;
-    }
-
-    div.button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    table.odai {
-      border: 1px solid #ccc;
-      border-collapse: separate;
-      border-radius: 10px;
-      border-spacing: 0;
-      padding: 10px 15px;
-
-      th,
-      td {
-        border-bottom: 1px solid #ccc;
-        padding: 10px 20px;
+    </script>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #444;
+          color: #e4e4e4;
+        }
+        a {
+          color: #e39777;
+        }
+        img {
+          filter: grayscale(30%);
+        }
       }
 
-      th {
-        border-right: 1px solid #ccc;
+      html {
+        touch-action: manipulation;
+      }
+      html[theme="dark-mode"] {
+        filter: invert(1) hue-rotate(180deg);
       }
 
-      tr {
-        &:first-child {
-          th {
-            border-radius: 10px 0 0 0;
-          }
+      body {
+        -webkit-text-size-adjust: 100%;
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+          "Hiragino Sans", Meiryo, sans-serif;
+      }
 
-          td {
-            border-radius: 0 10px 0 0;
-          }
+      h1,
+      h2,
+      p {
+        text-align: center;
+      }
+
+      a[target="_blank"][rel="noopener noreferrer"] {
+        padding-right: 15px;
+        background: url(external_link.png) right center/11px auto no-repeat;
+      }
+
+      div.button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      table.qrimage {
+        background-color: #fff;
+      }
+
+      table.odai {
+        border: 1px solid #ccc;
+        border-collapse: separate;
+        border-radius: 10px;
+        border-spacing: 0;
+        padding: 10px 15px;
+
+        th,
+        td {
+          border-bottom: 1px solid #ccc;
+          padding: 10px 20px;
         }
 
-        &:last-child {
-          th {
-            border-bottom: none;
-            border-radius: 0 0 0 10px;
+        th {
+          border-right: 1px solid #ccc;
+        }
+
+        tr {
+          &:first-child {
+            th {
+              border-radius: 10px 0 0 0;
+            }
+
+            td {
+              border-radius: 0 10px 0 0;
+            }
           }
 
-          td {
-            border-bottom: none;
-            border-radius: 0 0 10px 0;
+          &:last-child {
+            th {
+              border-bottom: none;
+              border-radius: 0 0 0 10px;
+            }
+
+            td {
+              border-bottom: none;
+              border-radius: 0 0 10px 0;
+            }
           }
         }
       }
-    }
 
-    table {
-      width: 300px;
-      margin-left: auto;
-      margin-right: auto;
-      font-family: "ヒラギノ丸ゴ Pro W4",
-        "ヒラギノ丸ゴ Pro",
-        "Hiragino Maru Gothic Pro",
-        "ヒラギノ角ゴ Pro W3",
-        "Hiragino Kaku Gothic Pro",
-        "HG丸ｺﾞｼｯｸM-PRO",
-        "HGMaruGothicMPRO";
+      table {
+        width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: "ヒラギノ丸ゴ Pro W4", "ヒラギノ丸ゴ Pro",
+          "Hiragino Maru Gothic Pro", "ヒラギノ角ゴ Pro W3",
+          "Hiragino Kaku Gothic Pro", "HG丸ｺﾞｼｯｸM-PRO", "HGMaruGothicMPRO";
       }
-    }
-  </style>
-</head>
+    </style>
+  </head>
 
-<body>
-  <h1>🎲 サイコロトーク 🎲</h1>
-  <h2>お題リスト</h2>
-  <table summary="お題" class="odai">
-    <tbody>
-      <tr>
-        <td colspan="2">
-          <div id="odaistring"></div>
-          <div hidden id="odaistring_utf8"></div>
-          <div hidden id="odaistring_qr"></div>
-          <textarea hidden id="odaiarea"></textarea>
-          <script>
-            setOdai();
-          </script>
-          <hr>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td>
-          <div class="button">
-            <button id="speechButton">読み上げる</button>
-          </div>
-          <script>
-            const text = document.querySelector('#odaiarea');
-            const button = document.querySelector('#speechButton');
-            button.addEventListener('click',
-              function() {
+  <body>
+    <h1>🎲 サイコロトーク 🎲</h1>
+    <h2>お題リスト</h2>
+    <table summary="お題" class="odai">
+      <tbody>
+        <tr>
+          <td colspan="2">
+            <div id="odaistring"></div>
+            <div hidden id="odaistring_utf8"></div>
+            <div hidden id="odaistring_qr"></div>
+            <textarea hidden id="odaiarea"></textarea>
+            <script>
+              setOdai();
+            </script>
+            <hr />
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>
+            <div class="button">
+              <button id="speechButton">読み上げる</button>
+            </div>
+            <script>
+              const text = document.querySelector("#odaiarea");
+              const button = document.querySelector("#speechButton");
+              button.addEventListener("click", function () {
                 const uttr = new SpeechSynthesisUtterance(text.value);
-                uttr.lang = 'ja-JP';
+                uttr.lang = "ja-JP";
                 uttr.rate = 1.0;
                 speechSynthesis.speak(uttr);
-              }
-            )
-          </script>
-        </td>
-        <td>
-          <div class="button">
-            <button onclick="onCopyMessage()">コピーする</button>
-          </div>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+              });
+            </script>
+          </td>
+          <td>
+            <div class="button">
+              <button onclick="onCopyMessage()">コピーする</button>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
 
-  <p>
+    <p>
+      <script>
+        document.write(getCurrentTimeStr());
+      </script>
+      作成
+    </p>
+
+    <table class="marumoji">
+      <tbody>
+        <tr>
+          <td>
+            <div class="button">
+              <button onClick="onPrevOdaiset()">前へ</button>
+            </div>
+          </td>
+          <td>
+            <p id="odainum">
+              <script>
+                setOdainNum();
+              </script>
+            </p>
+          </td>
+          <td>
+            <div class="button">
+              <button onClick="onNextOdaiset()">次へ</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p></p>
+
+    <p>
+      <button onClick="onRebuildOdai();">作り直す</button>
+    </p>
+
+    <hr />
+
+    <h2>QRコードでお題リストをコピー</h2>
+    <table class="qrimage">
+      <tbody>
+        <tr>
+          <td>
+            <p id="qrcode"></p>
+            <script>
+              setOdaiQR();
+            </script>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>※丸数字はカッコ付き数字に変換されます</p>
+
+    <hr />
+
+    <p>
+      出典: フリー百科事典『ウィキペディア（Wikipedia）』<br />
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%82%AA%E3%83%B3%E3%81%AE%E3%81%94%E3%81%8D%E3%81%92%E3%82%93%E3%82%88%E3%81%86"
+        >ライオンのごきげんよう</a
+      >
+    </p>
     <script>
-      document.write(getCurrentTimeStr());
+      let nowdate = new Date();
+      let mon = nowdate.getMonth() + 1;
+      let date = nowdate.getDate();
+      if (mon == 9 && date == 3) {
+        confettiAnime();
+        setInterval(confettiAnime, 1000);
+      }
     </script>
-    作成
-  </p>
-
-<table class="marumoji">
-  <tbody>
-    <tr>
-      <td>
-        <div class="button">
-          <button onClick="onPrevOdaiset()">前へ</button>
-        </div>
-      </td>
-      <td>
-        <p id="odainum">
-          <script>
-            setOdainNum();
-          </script>
-        </p>
-      </td>
-      <td>
-        <div class="button">
-          <button onClick="onNextOdaiset()">次へ</button>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-  <p>
-  </p>
-
-  <p>
-    <button onClick="onRebuildOdai();">作り直す</button>
-  </p>
-
-  <hr>
-
-  <h2>QRコードでお題リストをコピー</h2>
-  <p id="qrcode"></p>
-  <script>
-    setOdaiQR();
-  </script>
-  <p>※丸数字はカッコ付き数字に変換されます</p>
-
-  <hr>
-
-  <p>出典: フリー百科事典『ウィキペディア（Wikipedia）』<br>
-    <a target="_blank" rel="noopener noreferrer" href="https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%82%AA%E3%83%B3%E3%81%AE%E3%81%94%E3%81%8D%E3%81%92%E3%82%93%E3%82%88%E3%81%86">ライオンのごきげんよう</a>
-  </p>
-  <script>
-    let nowdate = new Date();
-    let mon = nowdate.getMonth() + 1;
-    let date = nowdate.getDate();
-    if (mon == 9 && date == 3) {
-      confettiAnime();
-      setInterval(confettiAnime, 1000);
-    }
-  </script>
-</body>
-
+  </body>
 </html>
