@@ -259,7 +259,6 @@
       for (let i = 0; i < 6; i++) {
         html = html + numstr_utf8[i] + ':' + odai_list[i] + '<br>';
       }
-      html = html + '</div>';
       div.innerHTML = html;
 
       div = document.getElementById('odaistring_utf8');
@@ -267,7 +266,6 @@
       for (let i = 0; i < 6; i++) {
         html = html + ' \n' + numstr_utf8[i] + ':' + odai_list[i];
       }
-      html = html + '</div>';
       div.innerHTML = html;
 
       div = document.getElementById('odaistring_qr');
@@ -275,7 +273,6 @@
       for (let i = 0; i < 6; i++) {
         html = html + ' \n' + numstr_ascii[i] + ':' + odai_list[i];
       }
-      html = html + '</div>';
       div.innerHTML = html;
 
       let textarea = document.getElementById('odaiarea');
