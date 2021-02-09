@@ -193,7 +193,6 @@
 
       const numstr_ascii = ["[1]", "[2]", "[3]", "[4]", "[5]", "[6]"];
       const numstr_utf8 = ["❶", "❷", "❸", "❹", "❺", "❻"];
-      const dicestr_utf8 = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
 
       var odai = [];
       var odai_num = 0;
@@ -282,21 +281,21 @@
         let div = document.getElementById("odaistring");
         let html = "本日のサイコロトーク<br>";
         for (let i = 0; i < 6; i++) {
-          html = html + numstr_utf8[i] + ":" + odai_list[i] + "<br>";
+          html += numstr_utf8[i] + ":" + odai_list[i] + "<br>";
         }
         div.innerHTML = html;
 
         div = document.getElementById("odaistring_utf8");
         html = "本日のサイコロトーク";
         for (let i = 0; i < 6; i++) {
-          html = html + " \n" + numstr_utf8[i] + ":" + odai_list[i];
+          html += " \n" + numstr_utf8[i] + ":" + odai_list[i];
         }
         div.innerHTML = html;
 
         div = document.getElementById("odaistring_qr");
         html = "本日のサイコロトーク";
         for (let i = 0; i < 6; i++) {
-          html = html + " \n" + numstr_ascii[i] + ":" + odai_list[i];
+          html += " \n" + numstr_ascii[i] + ":" + odai_list[i];
         }
         div.innerHTML = html;
 
@@ -304,7 +303,7 @@
         let val = "本日のお題は、次の通りです。\n";
         for (let i = 0; i < 6; i++) {
           let t = odai_list[i][0].replace("○○", "マルマル");
-          val = val + (i + 1) + "、" + t + "。\n";
+          val += i + 1 + "、" + t + "。\n";
         }
         textarea.textContent = val;
       }
@@ -312,7 +311,7 @@
       function setOdainNum() {
         let p = document.getElementById("odainum");
         p.innerHTML =
-          "リスト No." +
+          "お題 No." +
           ("00" + (odai_selected_num + 1)).slice(-2) +
           " / " +
           ("00" + odai_set_num).slice(-2);
@@ -383,9 +382,11 @@
           background-color: #444;
           color: #e4e4e4;
         }
+
         a {
           color: #e39777;
         }
+
         img {
           filter: grayscale(30%);
         }
@@ -394,6 +395,7 @@
       html {
         touch-action: manipulation;
       }
+
       html[theme="dark-mode"] {
         filter: invert(1) hue-rotate(180deg);
       }
@@ -480,7 +482,30 @@
 
   <body>
     <h1>🎲 サイコロトーク 🎲</h1>
-    <h2>お題リスト</h2>
+    <table class="marumoji">
+      <tbody>
+        <tr>
+          <td>
+            <div class="button">
+              <button onClick="onPrevOdaiset()">◀︎</button>
+            </div>
+          </td>
+          <td>
+            <p id="odainum">
+              <script>
+                setOdainNum();
+              </script>
+            </p>
+          </td>
+          <td>
+            <div class="button">
+              <button onClick="onNextOdaiset()">▶︎</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
     <table summary="お題" class="odai">
       <tbody>
         <tr>
@@ -529,38 +554,13 @@
       作成
     </p>
 
-    <table class="marumoji">
-      <tbody>
-        <tr>
-          <td>
-            <div class="button">
-              <button onClick="onPrevOdaiset()">◀︎</button>
-            </div>
-          </td>
-          <td>
-            <p id="odainum">
-              <script>
-                setOdainNum();
-              </script>
-            </p>
-          </td>
-          <td>
-            <div class="button">
-              <button onClick="onNextOdaiset()">▶︎</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <p></p>
-
     <p>
       <button onClick="onRebuildOdai()">作り直す</button>
     </p>
 
     <hr />
 
-    <h2>QRコードでお題リストをコピー</h2>
+    <h2>QRコードでお題をコピー</h2>
     <table class="qrimage">
       <tbody>
         <tr>
