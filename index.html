@@ -307,10 +307,10 @@
     function setOdainNum() {
       let p = document.getElementById("odainum");
       p.innerHTML =
-        "お題 No." +
+        "<h2>お題 No." +
         ("00" + (odai_selected_num + 1)).slice(-2) +
         " / " +
-        ("00" + odai_set_num).slice(-2);
+        ("00" + odai_set_num).slice(-2) + "</h2>";
     }
 
     function onChangeOdaiset() {
@@ -478,7 +478,7 @@
 
 <body>
   <h1>🎲 サイコロトーク 🎲</h1>
-  <table class="marumoji">
+  <table>
     <tbody>
       <tr>
         <td>
