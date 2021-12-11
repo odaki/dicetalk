@@ -248,7 +248,7 @@
         odai.push("今年やり残したこと");
       }
       odai_num = odai.length;
-      odai_set_num = odai_num / 6;
+      odai_set_num = (odai_num / 6)|0;
       odai_set = new Array(odai_set_num);
       for (let j = 0; j < odai_set_num; j++) {
         odai_set[j] = [];
